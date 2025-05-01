@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.opensource.armmpnews.android"
-    compileSdk = 34
+    compileSdk = 35
     defaultConfig {
         applicationId = "com.opensource.armmpnews.android"
         minSdk = 24
@@ -42,5 +42,6 @@ dependencies {
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.material3)
     implementation(libs.androidx.activity.compose)
+    implementation(libs.coil.compose)
     debugImplementation(libs.compose.ui.tooling)
 }

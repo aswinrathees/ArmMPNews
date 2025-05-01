@@ -1,4 +1,4 @@
-package com.opensource.armmpnews.android
+package com.opensource.armmpnews.android.views
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
