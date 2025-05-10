@@ -20,7 +20,7 @@ actual class Platform() {
         get() = round(Resources.getSystem().displayMetrics.density).toInt()
 
     actual fun logSystemInfo() {
-        Log.d("ArmMPNews", "OS Version: $osVersion, OS Name: $osName, Device Model: $deviceModel, Density: $density")
+        Log.d("ArmMPNewsDB.sq", "OS Version: $osVersion, OS Name: $osName, Device Model: $deviceModel, Density: $density")
     }
 
 }

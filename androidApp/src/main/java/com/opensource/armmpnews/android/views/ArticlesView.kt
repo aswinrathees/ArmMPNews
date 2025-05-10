@@ -24,13 +24,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.opensource.armmpnews.articles.Article
-import com.opensource.armmpnews.articles.ArticleViewModel
+import com.opensource.armmpnews.news.application.Article
+import com.opensource.armmpnews.news.presentation.NewsViewModel
 
 @Composable
-fun ArticleScreen(articleViewModel: ArticleViewModel) {
+fun ArticleScreen(newsViewModel: NewsViewModel) {
 
-    val articleState = articleViewModel.articlesState.collectAsState()
+    val articleState = newsViewModel.newsState.collectAsState()
 
     Column {
         AppBar()

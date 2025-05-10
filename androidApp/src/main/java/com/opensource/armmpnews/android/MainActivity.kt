@@ -12,7 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.opensource.armmpnews.Platform
 import com.opensource.armmpnews.android.views.AboutScreen
 import com.opensource.armmpnews.android.views.ArticleScreen
-import com.opensource.armmpnews.articles.ArticleViewModel
+import com.opensource.armmpnews.news.presentation.NewsViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,14 +20,14 @@ class MainActivity : ComponentActivity() {
 
         Platform().logSystemInfo()
 
-        val articleViewModel: ArticleViewModel by viewModels()
+        val newsViewModel: NewsViewModel by viewModels()
         setContent {
             MyApplicationTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    ArticleScreen(articleViewModel)
+                    ArticleScreen(newsViewModel)
                 }
             }
         }

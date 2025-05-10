@@ -19,6 +19,6 @@ actual class Platform() {
         get() = UIScreen.mainScreen.scale.toInt()
 
     actual fun logSystemInfo() {
-        NSLog("ArmMPNews OS Version: $osVersion, OS Name: $osName, Device Model: $deviceModel, Density: $density")
+        NSLog("ArmMPNewsDB.sq OS Version: $osVersion, OS Name: $osName, Device Model: $deviceModel, Density: $density")
     }
 }

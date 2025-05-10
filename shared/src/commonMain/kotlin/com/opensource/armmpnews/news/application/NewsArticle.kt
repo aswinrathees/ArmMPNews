@@ -1,6 +1,6 @@
-package com.opensource.armmpnews.articles
+package com.opensource.armmpnews.news.application
 
-data class Article(
+data class NewsArticle(
     val title: String,
     val desc: String,
     val date: String,

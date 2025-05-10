@@ -1,0 +1,36 @@
+CREATE TABLE NewsArticle (
+    title TEXT NOT NULL,
+    desc TEXT,
+    date TEXT NOT NULL,
+    imageUrl TEXT
+);
+
+insertNews:
+INSERT INTO NewsArticle(title, desc, date, imageUrl)
+VALUES(?, ?, ?, ?);
+
+selectAllNews:
+SELECT NewsArticle.*
+FROM NewsArticle;
+
+removeAllNews:
+DELETE FROM NewsArticle;
+
+CREATE TABLE Source (
+    id TEXT NOT NULL,
+    name TEXT NOT NULL,
+    desc TEXT NOT NULL,
+    language TEXT NOT NULL,
+    country TEXT NOT NULL
+);
+
+insertSource:
+INSERT INTO Source(id, name, desc, language, country)
+VALUES(?, ?, ?, ?, ?);
+
+selectAllSources:
+SELECT Source.*
+FROM Source;
+
+removeAllSources:
+DELETE FROM Source;
