@@ -12,6 +12,6 @@ val newsArticleModule = module {
     single<NewsService> { NewsService(get()) }
     single<NewsUseCase> { NewsUseCase(get()) }
     single<NewsViewModel> { NewsViewModel(get()) }
-    //single<NewsDataSource> { NewsDataSource(get()) }
+    single<NewsDataSource> { NewsDataSource(get()) }
     single<NewsRepository> { NewsRepository(get(), get()) }
 }

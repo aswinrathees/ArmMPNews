@@ -8,7 +8,7 @@ class NewsRepository(
     suspend fun getNewsArticles(isForceFetch: Boolean): List<NewsRaw> {
         return when (isForceFetch) {
             true -> {
-                dataSource.clearNewsArtciles()
+                dataSource.clearNewsArticles()
                 fetchNewsArticles()
             }
 

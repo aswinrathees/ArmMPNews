@@ -5,8 +5,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -17,30 +21,42 @@ import androidx.compose.ui.unit.dp
 import com.opensource.armmpnews.Platform
 
 @Composable
-fun AboutScreen() {
-
+fun AboutScreen(
+    onUpButtonClick: () -> Unit
+) {
     Column {
-        Toolbar()
+        Toolbar(onUpButtonClick)
         ContentView()
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun Toolbar() {
+private fun Toolbar(
+    onUpButtonClick: () -> Unit
+) {
     TopAppBar(
-        title = { Text("About Device") }
+        title = { Text(text = "About Device") },
+        navigationIcon = {
+            IconButton(onClick = onUpButtonClick) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = "Up Button",
+                )
+            }
+        }
     )
 }
 
 @Composable
 private fun ContentView() {
-
     val items = makeItems()
 
-    LazyColumn(modifier = Modifier.fillMaxSize()) {
-        items(items) {
-            RowView(title = it.first, subtitle = it.second)
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+    ) {
+        items(items) { row ->
+            RowView(title = row.first, subtitle = row.second)
         }
     }
 }
@@ -50,26 +66,27 @@ private fun makeItems(): List<Pair<String, String>> {
     platform.logSystemInfo()
 
     return listOf(
-        Pair("OS Name", "${platform.osName} (${platform.osVersion})"),
-        Pair("Device Model", platform.deviceModel),
+        Pair("Operating System", "${platform.osName} ${platform.osVersion}"),
+        Pair("Device", platform.deviceModel),
         Pair("Density", platform.density.toString())
     )
 }
 
 @Composable
-private fun RowView(title: String, subtitle: String) {
-    Column(modifier = Modifier.padding(8.dp)) {
+private fun RowView(
+    title: String,
+    subtitle: String,
+) {
+    Column(Modifier.padding(8.dp)) {
         Text(
             text = title,
-            style = MaterialTheme.typography.bodyLarge,
-            color = Color.Gray
+            style = MaterialTheme.typography.bodySmall,
+            color = Color.Gray,
         )
         Text(
             text = subtitle,
-            style = MaterialTheme.typography.bodyMedium,
-            color = Color.Black
+            style = MaterialTheme.typography.bodyLarge,
         )
     }
-
     Divider()
 }

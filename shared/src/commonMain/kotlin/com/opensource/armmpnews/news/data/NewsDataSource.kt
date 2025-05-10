@@ -4,7 +4,9 @@ import opensource.armmpnews.db.ARMMPNewsDB
 
 class NewsDataSource(private val db: ARMMPNewsDB) {
 
-    fun getNewsArticles(): List<NewsRaw> = db.armMPNewsDBQueries.selectAllNews(::mapToNewsRaw).executeAsList()
+    fun getNewsArticles(): List<NewsRaw> = db.armMPNewsDBQueries.selectAllNews { title, desc, date, imageUrl ->
+        NewsRaw(title, desc, date, imageUrl)
+    }.executeAsList()
 
     fun insertNewsArticles(newsArticles: List<NewsRaw>) {
         db.armMPNewsDBQueries.removeAllNews()
@@ -15,7 +17,7 @@ class NewsDataSource(private val db: ARMMPNewsDB) {
         }
     }
 
-    fun clearNewsArtciles() {
+    fun clearNewsArticles() {
         db.armMPNewsDBQueries.removeAllNews()
     }
 
@@ -28,15 +30,11 @@ class NewsDataSource(private val db: ARMMPNewsDB) {
         )
     }
 
+    // Check
     private fun mapToNewsRaw(
         title: String,
         desc: String,
         date: String,
         imageUrl: String
-    ):NewsRaw = NewsRaw(
-        title = title,
-        desc = desc,
-        date = date,
-        imageUrl = imageUrl
-    )
+    ): NewsRaw = NewsRaw(title, desc, date, imageUrl)
 }

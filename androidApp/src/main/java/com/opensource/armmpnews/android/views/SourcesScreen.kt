@@ -7,17 +7,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material.icons.outlined.List
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -30,50 +26,39 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.SwipeRefreshState
-import com.opensource.armmpnews.news.application.NewsArticle
-import com.opensource.armmpnews.news.presentation.NewsViewModel
+import com.opensource.armmpnews.sources.application.Source
+import com.opensource.armmpnews.sources.presentation.SourcesViewModel
 import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun ArticleScreen(
-    onAboutButtonClick: () -> Unit,
-    onSourcesButtonClick: () -> Unit,
-    newsViewModel: NewsViewModel = getViewModel()) {
-
-    val articlesState = newsViewModel.newsState.collectAsState()
+fun SourcesScreen(
+    viewModel: SourcesViewModel = getViewModel(),
+    onUpButtonClick: () -> Unit
+) {
+    val articlesState = viewModel.sourcesState.collectAsState()
 
     Column {
-        AppBar(onAboutButtonClick, onSourcesButtonClick)
+        AppBar(onUpButtonClick)
 
         if (articlesState.value.error != null)
             ErrorMessage(articlesState.value.error!!)
-        if (articlesState.value.articles.isNotEmpty())
-            ArticlesListView(newsViewModel)
+
+        SourcesListView(viewModel)
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun AppBar(
-    onAboutButtonClick: () -> Unit,
-    onSourcesButtonClick: () -> Unit,
+    onUpButtonClick: () -> Unit,
 ) {
     TopAppBar(
-        title = { Text(text = "Articles") },
-        actions = {
-            IconButton(onClick = onSourcesButtonClick) {
+        title = { Text(text = "Sources") },
+        navigationIcon = {
+            IconButton(onClick = onUpButtonClick) {
                 Icon(
-                    imageVector = Icons.Outlined.List,
-                    contentDescription = "Sources Button",
-                )
-            }
-            IconButton(onClick = onAboutButtonClick) {
-                Icon(
-                    imageVector = Icons.Outlined.Info,
-                    contentDescription = "About Device Button",
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = "Up Button",
                 )
             }
         }
@@ -81,41 +66,34 @@ private fun AppBar(
 }
 
 @Composable
-fun ArticlesListView(viewModel: NewsViewModel) {
+fun SourcesListView(viewModel: SourcesViewModel) {
 
-    SwipeRefresh(
-        state = SwipeRefreshState(viewModel.newsState.value.loading),
-        onRefresh = { viewModel.getArticles(true) }) {
-        LazyColumn(modifier = Modifier.fillMaxSize()) {
-            items(viewModel.newsState.value.articles) { article ->
-                ArticleItemView(article = article)
-            }
+    LazyColumn(modifier = Modifier.fillMaxSize()) {
+        items(viewModel.sourcesState.value.sources) { source ->
+            SourceItemView(source = source)
         }
     }
+
 }
 
 @Composable
-fun ArticleItemView(article: NewsArticle) {
+fun SourceItemView(source: Source) {
 
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
     ) {
-        AsyncImage(
-            model = article.imageUrl,
-            contentDescription = null
-        )
         Spacer(modifier = Modifier.height(4.dp))
         Text(
-            text = article.title,
+            text = source.name,
             style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 22.sp)
         )
         Spacer(modifier = Modifier.height(8.dp))
-        Text(text = article.desc)
+        Text(text = source.desc)
         Spacer(modifier = Modifier.height(4.dp))
         Text(
-            text = article.date,
+            text = source.origin,
             style = TextStyle(color = Color.Gray),
             modifier = Modifier.align(Alignment.End)
         )
@@ -123,8 +101,15 @@ fun ArticleItemView(article: NewsArticle) {
     }
 }
 
-
-
-
-
-
+@Composable
+fun ErrorMessage(message: String) {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = message,
+            style = TextStyle(fontSize = 28.sp, textAlign = TextAlign.Center)
+        )
+    }
+}

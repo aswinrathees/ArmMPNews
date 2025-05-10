@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.opensource.armmpnews.Platform
 import com.opensource.armmpnews.android.views.AboutScreen
+import com.opensource.armmpnews.android.views.AppScaffold
 import com.opensource.armmpnews.android.views.ArticleScreen
 import com.opensource.armmpnews.news.presentation.NewsViewModel
 
@@ -18,27 +19,15 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Platform().logSystemInfo()
-
-        val newsViewModel: NewsViewModel by viewModels()
         setContent {
             MyApplicationTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    ArticleScreen(newsViewModel)
+                    AppScaffold()
                 }
             }
         }
-    }
-}
-
-
-@Preview
-@Composable
-fun DefaultPreview() {
-    MyApplicationTheme {
-        AboutScreen()
     }
 }

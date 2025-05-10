@@ -18,7 +18,7 @@ class NewsViewModel(
         getArticles()
     }
 
-    private fun getArticles(forceFetch: Boolean = false) {
+    fun getArticles(forceFetch: Boolean = false) {
         scope.launch {
             _articleState.emit(NewsState(loading = true, articles = _articleState.value.articles))
             val articles = useCase.getArticles(forceFetch)
