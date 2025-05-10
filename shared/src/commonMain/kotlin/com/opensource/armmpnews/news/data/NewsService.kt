@@ -6,7 +6,7 @@ import io.ktor.client.request.get
 
 class NewsService(private val httpClient: HttpClient) {
 
-    private val country = "in"
+    private val country = "us"
     private val category = "business"
     private val apiKey = "f67ace1b27b24ce4b95c7f71fde88920"
 
